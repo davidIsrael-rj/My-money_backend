@@ -39,11 +39,11 @@ const validateToken = (req, res, next) => {
     })
 }
 
-const singnup = (req, res, any) => {
-    const name = req.body.name || ''
-    const email = req.body.email || ''
-    const password = req.body.password || ''
-    const confirmPassword = req.body.confirm_password || ''
+const signup = (req, res, any) => {
+const name = req.body.name || ''
+const email = req.body.email || ''
+const password = req.body.password || ''
+const confirmPassword = req.body.confirm_password || ''
 
     if (!email.match(emailRegex)) {
         return res.status(400).send({ errors: ['O e-mail informado está inválido'] })
@@ -81,4 +81,4 @@ const singnup = (req, res, any) => {
     })
 }
 
-module.exports = { login, signup, validateToken}
+module.exports = { login, signup, validateToken }
