@@ -15,6 +15,7 @@ const sendErrorsFromDB = (res, dbErrors) => {
 
 const login = (req, res, next) => {
     const email = req.body.email || ''
+    const password = req.body.password || ''
 
     User.findOne({ email }, (err, user) => {
         if (err) {
@@ -46,6 +47,7 @@ const password = req.body.password || ''
 const confirmPassword = req.body.confirm_password || ''
 
     if (!email.match(emailRegex)) {
+        console.log(email +'email')
         return res.status(400).send({ errors: ['O e-mail informado está inválido'] })
     }
 
@@ -60,7 +62,7 @@ const confirmPassword = req.body.confirm_password || ''
     const salt = bcrypt.genSaltSync()
     const passwordHash = bcrypt.hashSync(password, salt)
     if (!bcrypt.compareSync(confirmPassword, passwordHash)) {
-        return res.status(400).send({ errrs: ['Senhas não conferem.'] })
+        return res.status(400).send({ errors: ['Senhas não conferem.'] })
     }
 
     User.findOne({ email }, (err, user) => {
