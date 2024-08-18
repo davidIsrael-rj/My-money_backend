@@ -40,21 +40,19 @@ const validateToken = (req, res, next) => {
     })
 }
 
-const signup = (req, res, any) => {
-const name = req.body.name || ''
-const email = req.body.email || ''
-const password = req.body.password || ''
-const confirmPassword = req.body.confirm_password || ''
-
+const signup = (req, res, next) => {
+    const name = req.body.name || ''
+    const email = req.body.email || ''
+    const password = req.body.password || ''
+    const confirmPassword = req.body.confirm_password || ''
     if (!email.match(emailRegex)) {
-        console.log(email +'email')
-        return res.status(400).send({ errors: ['O e-mail informado está inválido'] })
+        return res.status(400).send({ errors: ['O e-mail informa está inválido'] })
     }
 
     if (!password.match(passwordRegex)) {
         return res.status(400).send({
-            erros: [
-                "Senha precisar ter: uma letra maiúscula, uma letra minúscula, um número, uma caractere especial(@#$%) e tamanho entre 6-20."
+            errors: [
+                "Senha precisar ter: uma letra maiúscula, uma letra minúscula, um número, uma caractere especial(@#$ %) e tamanho entre 6 - 20."
             ]
         })
     }
@@ -72,10 +70,10 @@ const confirmPassword = req.body.confirm_password || ''
             return res.status(400).send({ errors: ['Usuário já cadastrado.'] })
         } else {
             const newUser = new User({ name, email, password: passwordHash })
-            newUser.save(err =>{
-                if(err){
+            newUser.save(err => {
+                if (err) {
                     return sendErrorsFromDB(res, err)
-                }else {
+                } else {
                     login(req, res, next)
                 }
             })
